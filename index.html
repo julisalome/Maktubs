@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maktubs – Client Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Times+New+Roman&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Georgia&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -107,87 +107,498 @@
     padding: 60px 48px;
   }
 
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 70px 0 50px;
-    border-bottom: 2px solid var(--border);
-    margin-bottom: 56px;
+  /* When home section active, main has no padding/max-width */
+  body.home-active main {
+    max-width: 100%;
+    padding: 0;
   }
 
-  .hero h1 {
-    font-family: Georgia, serif;
-    font-size: 40px;
-    font-weight: bold;
-    color: var(--brown-dark);
-    margin-bottom: 14px;
-    line-height: 1.3;
-    letter-spacing: 1px;
+  /* =====================
+     LANDING HOME (DARK)
+     ===================== */
+
+  /* When home is active, override body bg */
+  body.home-active {
+    background: #080a0f;
   }
 
-  .hero p {
-    color: var(--text-muted);
-    font-size: 14px;
-    max-width: 500px;
-    margin: 0 auto 32px;
-    font-style: italic;
+  body.home-active header {
+    background: rgba(8,10,15,0.92);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
   }
 
-  .hero-divider {
-    width: 80px;
-    height: 2px;
-    background: var(--brown);
-    margin: 0 auto;
+  body.home-active footer {
+    background: #080a0f;
+    border-top: 1px solid rgba(255,255,255,0.06);
   }
 
-  /* STEPS */
-  .steps {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 60px;
+  body.home-active footer p { color: rgba(255,255,255,0.25); }
+
+  /* Landing wrapper — full viewport, no max-width constraint */
+  .landing {
+    font-family: 'Inter', sans-serif;
+    color: #f0f0f0;
+    overflow-x: hidden;
   }
 
-  .step-card {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--brown);
-    padding: 32px;
+  /* HERO SECTION */
+  .lnd-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 80px 100px;
+    background: #080a0f;
+    overflow: hidden;
+  }
+
+  /* Animated grid background */
+  .lnd-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  /* Glow orbs */
+  .lnd-hero::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(92,61,30,0.18) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .lnd-orb2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(180,140,60,0.1) 0%, transparent 70%);
+    bottom: 0; left: 10%;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .lnd-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 6px 16px 6px 8px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 36px;
+    width: fit-content;
+  }
+
+  .lnd-badge-dot {
+    width: 6px; height: 6px;
+    background: #c8a96e;
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .lnd-hero h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(44px, 6vw, 84px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: #ffffff;
+    max-width: 780px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .lnd-hero h1 .highlight {
+    background: linear-gradient(135deg, #c8a96e 0%, #e8c97e 50%, #a07840 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .lnd-hero-sub {
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 1;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .lnd-cta-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .lnd-btn-primary {
+    background: #c8a96e;
+    color: #080a0f;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 16px 32px;
     cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .lnd-btn-primary:hover {
+    background: #e8c97e;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(200,169,110,0.3);
+  }
+
+  .lnd-btn-secondary {
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.15);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 16px 32px;
+    cursor: pointer;
+    border-radius: 4px;
     transition: all 0.25s;
   }
 
-  .step-card:hover {
-    background: var(--bg-3);
-    border-color: var(--brown-light);
-    box-shadow: 0 4px 16px rgba(92,61,30,0.1);
+  .lnd-btn-secondary:hover {
+    color: #fff;
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.05);
   }
 
-  .step-num {
-    font-family: Georgia, serif;
+  /* STATS ROW */
+  .lnd-stats {
+    display: flex;
+    gap: 0;
+    margin-top: 80px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 48px;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+  }
+
+  .lnd-stat {
+    flex: 1;
+    min-width: 160px;
+    padding-right: 40px;
+  }
+
+  .lnd-stat + .lnd-stat {
+    padding-left: 40px;
+    border-left: 1px solid rgba(255,255,255,0.07);
+    padding-right: 40px;
+  }
+
+  .lnd-stat-num {
+    font-family: 'Inter', sans-serif;
     font-size: 36px;
-    font-weight: bold;
-    color: var(--border);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1px;
     line-height: 1;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
   }
 
-  .step-card:hover .step-num { color: var(--brown-light); }
+  .lnd-stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
 
-  .step-card h3 {
-    font-family: Georgia, serif;
+  /* SERVICES SECTION */
+  .lnd-services {
+    background: #0d0f14;
+    padding: 120px 80px;
+    position: relative;
+  }
+
+  .lnd-section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 20px;
+  }
+
+  .lnd-section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(30px, 4vw, 52px);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    max-width: 600px;
+    margin-bottom: 80px;
+  }
+
+  .lnd-section-title span { color: rgba(255,255,255,0.25); }
+
+  .lnd-services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .lnd-service-card {
+    background: #0d0f14;
+    padding: 40px 36px;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lnd-service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c8a96e, transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+
+  .lnd-service-card:hover::before { transform: scaleX(1); }
+  .lnd-service-card:hover { background: #11131a; }
+
+  .lnd-service-icon {
+    width: 44px; height: 44px;
+    background: rgba(200,169,110,0.1);
+    border: 1px solid rgba(200,169,110,0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
     font-size: 18px;
-    font-weight: bold;
-    color: var(--brown-dark);
+  }
+
+  .lnd-service-card h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .lnd-service-card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.7;
+  }
+
+  /* HOW IT WORKS */
+  .lnd-how {
+    background: #080a0f;
+    padding: 120px 80px;
+  }
+
+  .lnd-how-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .lnd-how-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .lnd-how-step {
+    display: flex;
+    gap: 24px;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lnd-how-step:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+  .lnd-how-step:hover .lnd-step-num { color: #c8a96e; }
+
+  .lnd-step-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 2px;
+    min-width: 32px;
+    padding-top: 3px;
+    transition: color 0.2s;
+  }
+
+  .lnd-step-content h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
     margin-bottom: 8px;
+    letter-spacing: -0.2px;
+  }
+
+  .lnd-step-content p {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.7;
+  }
+
+  .lnd-how-visual {
+    background: #0d0f14;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 40px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lnd-how-visual::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(200,169,110,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .lnd-tx-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .lnd-tx-left { display: flex; flex-direction: column; gap: 4px; }
+  .lnd-tx-type { font-size: 12px; font-weight: 600; color: #fff; }
+  .lnd-tx-pair { font-size: 11px; color: rgba(255,255,255,0.3); }
+  .lnd-tx-amount { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
+
+  .lnd-tx-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 100px;
     letter-spacing: 0.5px;
   }
 
-  .step-card p {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-style: italic;
+  .lnd-tx-badge.completed { background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
+  .lnd-tx-badge.pending { background: rgba(200,169,110,0.1); color: #c8a96e; border: 1px solid rgba(200,169,110,0.2); }
+  .lnd-tx-badge.processing { background: rgba(99,179,237,0.1); color: #63b3ed; border: 1px solid rgba(99,179,237,0.2); }
+
+  .lnd-rate-display {
+    background: rgba(200,169,110,0.05);
+    border: 1px solid rgba(200,169,110,0.15);
+    border-radius: 8px;
+    padding: 20px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Inter', sans-serif;
+    margin-top: 4px;
+  }
+
+  .lnd-rate-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+  .lnd-rate-val { font-size: 22px; font-weight: 800; color: #c8a96e; letter-spacing: -0.5px; }
+  .lnd-rate-sub { font-size: 10px; color: rgba(255,255,255,0.25); }
+
+  /* CTA SECTION */
+  .lnd-cta {
+    background: linear-gradient(135deg, #1a1208 0%, #0d0f14 50%, #080a0f 100%);
+    padding: 120px 80px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lnd-cta::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+  }
+
+  .lnd-cta h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .lnd-cta p {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.4);
+    max-width: 440px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  .lnd-cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
   }
 
   /* SECTIONS */
@@ -546,15 +957,30 @@
   footer p + p { margin-top: 6px; }
 
   /* RESPONSIVE */
+  @media (max-width: 860px) {
+    .lnd-hero { padding: 100px 32px 80px; }
+    .lnd-services { padding: 80px 32px; }
+    .lnd-how { padding: 80px 32px; }
+    .lnd-cta { padding: 80px 32px; }
+    .lnd-services-grid { grid-template-columns: 1fr 1fr; }
+    .lnd-how-grid { grid-template-columns: 1fr; }
+    .lnd-how-visual { display: none; }
+    .lnd-stats { gap: 24px; }
+    .lnd-stat + .lnd-stat { border-left: none; padding-left: 0; }
+  }
+
   @media (max-width: 640px) {
     header { padding: 0 20px; }
     main { padding: 32px 20px; }
-    .steps { grid-template-columns: 1fr; }
     .form-row.col-2, .form-row.col-3, .form-row.col-4 { grid-template-columns: 1fr; }
     nav { display: none; }
-    .hero h1 { font-size: 28px; }
     .doc-header { flex-direction: column; align-items: flex-start; gap: 10px; }
     .doc-header-right { margin-left: 0; }
+    .lnd-hero { padding: 80px 24px 60px; }
+    .lnd-services { padding: 60px 24px; }
+    .lnd-services-grid { grid-template-columns: 1fr; }
+    .lnd-how { padding: 60px 24px; }
+    .lnd-cta { padding: 60px 24px; }
   }
 </style>
 </head>
@@ -571,25 +997,205 @@
 
 <main>
 
-  <!-- HOME -->
+  <!-- HOME LANDING -->
   <div class="section visible" id="sec-home">
-    <div class="hero">
-      <h1>Client Onboarding Portal</h1>
-      <p>Complete your account opening process by reviewing the required documents and filling in the corresponding forms.</p>
-      <div class="hero-divider"></div>
-    </div>
-    <div class="steps">
-      <div class="step-card" onclick="showSection('docs')">
-        <div class="step-num">01</div>
-        <h3>Read the Documents</h3>
-        <p>Review the Account Agreement, opening requirements, CRS form and other documents before proceeding.</p>
+  <div class="landing">
+
+    <!-- HERO -->
+    <div class="lnd-hero">
+      <div class="lnd-orb2"></div>
+
+      <div class="lnd-badge">
+        <div class="lnd-badge-dot"></div>
+        OTC Fiat · Crypto · FX
       </div>
-      <div class="step-card" onclick="showSection('forms')">
-        <div class="step-num">02</div>
-        <h3>Complete the Forms</h3>
-        <p>Fill in the KYC, account opening and certification forms according to your client profile.</p>
+
+      <h1>
+        Move money<br>
+        across borders.<br>
+        <span class="highlight">Without limits.</span>
+      </h1>
+
+      <p class="lnd-hero-sub">
+        Maktubs provides institutional-grade OTC fiat-to-crypto and crypto-to-fiat conversions across multiple currencies — with deep liquidity, competitive FX rates, and full compliance.
+      </p>
+
+      <div class="lnd-cta-row">
+        <button class="lnd-btn-primary" onclick="showSection('forms')">Open an Account</button>
+        <button class="lnd-btn-secondary" onclick="showSection('docs')">Read the Agreement</button>
+      </div>
+
+      <div class="lnd-stats">
+        <div class="lnd-stat">
+          <div class="lnd-stat-num">15+</div>
+          <div class="lnd-stat-label">Fiat Currencies</div>
+        </div>
+        <div class="lnd-stat">
+          <div class="lnd-stat-num">OTC</div>
+          <div class="lnd-stat-label">Direct Settlement</div>
+        </div>
+        <div class="lnd-stat">
+          <div class="lnd-stat-num">24/7</div>
+          <div class="lnd-stat-label">Liquidity Access</div>
+        </div>
+        <div class="lnd-stat">
+          <div class="lnd-stat-num">FX</div>
+          <div class="lnd-stat-label">Multi-Currency</div>
+        </div>
       </div>
     </div>
+
+    <!-- SERVICES -->
+    <div class="lnd-services">
+      <div class="lnd-section-label">What We Do</div>
+      <div class="lnd-section-title">
+        Financial infrastructure<br>
+        <span>built for the new economy</span>
+      </div>
+
+      <div class="lnd-services-grid">
+        <div class="lnd-service-card">
+          <div class="lnd-service-icon">⇄</div>
+          <h3>OTC Fiat → Crypto</h3>
+          <p>Convert fiat currencies directly to crypto assets at institutional rates. USD, EUR, GBP, and more — settled directly to your wallet or custody account.</p>
+        </div>
+        <div class="lnd-service-card">
+          <div class="lnd-service-icon">₿</div>
+          <h3>OTC Crypto → Fiat</h3>
+          <p>Liquidate crypto positions into any of our supported fiat currencies. Deep liquidity pools ensure minimal slippage on large-volume transactions.</p>
+        </div>
+        <div class="lnd-service-card">
+          <div class="lnd-service-icon">FX</div>
+          <h3>Multi-Currency FX</h3>
+          <p>Exchange between 15+ fiat currencies at competitive interbank-adjacent rates. Ideal for businesses operating across multiple jurisdictions.</p>
+        </div>
+        <div class="lnd-service-card">
+          <div class="lnd-service-icon">→</div>
+          <h3>International Wires</h3>
+          <p>Send and receive international wire transfers with same-day or next-day settlement across SWIFT and correspondent banking networks.</p>
+        </div>
+        <div class="lnd-service-card">
+          <div class="lnd-service-icon">🏦</div>
+          <h3>Depository Accounts</h3>
+          <p>Checking, savings, and fixed time deposit accounts denominated in USD or EUR. Full online banking access with statement and wire management.</p>
+        </div>
+        <div class="lnd-service-card">
+          <div class="lnd-service-icon">✓</div>
+          <h3>Compliance-First</h3>
+          <p>Fully AML/KYC compliant operations under Salvadoran financial law. CRS/FATCA reporting, beneficial ownership verification, and PEP screening on every account.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="lnd-how">
+      <div class="lnd-section-label">Process</div>
+      <div class="lnd-section-title">Simple from<br><span>day one</span></div>
+
+      <div class="lnd-how-grid">
+        <div class="lnd-how-steps">
+          <div class="lnd-how-step">
+            <div class="lnd-step-num">01</div>
+            <div class="lnd-step-content">
+              <h4>Read & Download the Agreements</h4>
+              <p>Review our Depository Account Agreement, opening requirements, and CRS documentation. Download PDFs for your records.</p>
+            </div>
+          </div>
+          <div class="lnd-how-step">
+            <div class="lnd-step-num">02</div>
+            <div class="lnd-step-content">
+              <h4>Complete KYC & Account Forms</h4>
+              <p>Fill in your personal or business account application, KYC questionnaire, and any applicable compliance certifications.</p>
+            </div>
+          </div>
+          <div class="lnd-how-step">
+            <div class="lnd-step-num">03</div>
+            <div class="lnd-step-content">
+              <h4>Submit & Get Verified</h4>
+              <p>Our compliance team reviews your application. Once approved, your account is activated and you gain full access to our services.</p>
+            </div>
+          </div>
+          <div class="lnd-how-step">
+            <div class="lnd-step-num">04</div>
+            <div class="lnd-step-content">
+              <h4>Start Trading & Moving Funds</h4>
+              <p>Execute OTC conversions, international wires, and FX operations directly through your account manager or online portal.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lnd-how-visual">
+          <div style="font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:8px">Recent Activity</div>
+
+          <div class="lnd-tx-row">
+            <div class="lnd-tx-left">
+              <div class="lnd-tx-type">OTC Conversion</div>
+              <div class="lnd-tx-pair">USD → BTC</div>
+            </div>
+            <div>
+              <div class="lnd-tx-amount">$250,000</div>
+            </div>
+            <span class="lnd-tx-badge completed">Completed</span>
+          </div>
+
+          <div class="lnd-tx-row">
+            <div class="lnd-tx-left">
+              <div class="lnd-tx-type">Wire Transfer</div>
+              <div class="lnd-tx-pair">EUR → Account</div>
+            </div>
+            <div>
+              <div class="lnd-tx-amount">€85,000</div>
+            </div>
+            <span class="lnd-tx-badge pending">Processing</span>
+          </div>
+
+          <div class="lnd-tx-row">
+            <div class="lnd-tx-left">
+              <div class="lnd-tx-type">FX Exchange</div>
+              <div class="lnd-tx-pair">GBP → USD</div>
+            </div>
+            <div>
+              <div class="lnd-tx-amount">£120,000</div>
+            </div>
+            <span class="lnd-tx-badge completed">Completed</span>
+          </div>
+
+          <div class="lnd-tx-row">
+            <div class="lnd-tx-left">
+              <div class="lnd-tx-type">OTC Conversion</div>
+              <div class="lnd-tx-pair">ETH → EUR</div>
+            </div>
+            <div>
+              <div class="lnd-tx-amount">45.5 ETH</div>
+            </div>
+            <span class="lnd-tx-badge processing">Settling</span>
+          </div>
+
+          <div class="lnd-rate-display">
+            <div>
+              <div class="lnd-rate-label">Live FX Rate</div>
+              <div class="lnd-rate-sub">USD / EUR · Updated now</div>
+            </div>
+            <div style="text-align:right">
+              <div class="lnd-rate-val">0.9241</div>
+              <div class="lnd-rate-sub" style="color:#34d399">▲ +0.12% today</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="lnd-cta">
+      <h2>Ready to get started?</h2>
+      <p>Open your account today and access institutional-grade financial infrastructure for the digital economy.</p>
+      <div class="lnd-cta-buttons">
+        <button class="lnd-btn-primary" onclick="showSection('forms')">Open an Account</button>
+        <button class="lnd-btn-secondary" onclick="showSection('docs')">View Documents</button>
+      </div>
+    </div>
+
+  </div><!-- end landing -->
   </div>
 
   <!-- DOCUMENTS -->
@@ -1396,7 +2002,7 @@
 
 <script>
   // EmailJS init
-  (function(){ emailjs.init({ publicKey: "YOUR_EMAILJS_PUBLIC_KEY" }); })();
+  (function(){ emailjs.init({ publicKey: "hTsitOBWaVNE1mibA" }); })();
 
   // SECTION NAV
   function showSection(id) {
@@ -1404,8 +2010,16 @@
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     document.getElementById('sec-' + id).classList.add('visible');
     document.getElementById('nav-' + id).classList.add('active');
+    // Toggle dark mode for landing
+    if (id === 'home') {
+      document.body.classList.add('home-active');
+    } else {
+      document.body.classList.remove('home-active');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+  // Init body class on load
+  document.body.classList.add('home-active');
 
   // ACCORDION
   function toggleDoc(id) {
@@ -1470,7 +2084,7 @@
     const html = `<div style="font-family:Georgia,serif;max-width:700px;margin:0 auto"><div style="background:#3d2810;padding:20px;text-align:center"><h1 style="color:#fff;font-size:22px;letter-spacing:3px;margin:0">MAKTUBS</h1><p style="color:rgba(255,255,255,0.5);font-size:10px;margin:4px 0 0;letter-spacing:2px">FINANCIAL SERVICES</p></div><div style="background:#faf8f5;padding:24px"><h2 style="color:#3d2810;font-size:18px;margin:0 0 6px">${formName}</h2><p style="color:#8a7060;font-size:12px;margin:0 0 20px;font-style:italic">Submitted: ${new Date().toLocaleString()}</p><table style="width:100%;border-collapse:collapse;background:white;border:1px solid #d4c4b0">${tableRows}</table></div><div style="background:#3d2810;padding:14px;text-align:center"><p style="color:rgba(255,255,255,0.4);font-size:11px;margin:0">Maktubs Financial Services — San Salvador, El Salvador</p></div></div>`;
 
     try {
-      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+      await emailjs.send('service_bmjz3ye', 'template_c619jao', {
         to_email: 'renesalome85@gmail.com',
         form_name: formName,
         form_data: textData,
