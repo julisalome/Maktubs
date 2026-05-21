@@ -2074,23 +2074,22 @@
     btn.textContent = 'Sending...';
 
     const data = collectFormData(form);
-    const textData = formatData(data, formName);
 
-    let tableRows = '';
+    // Build clean text lines for the email template
+    let lines = '';
     for (let [k, v] of Object.entries(data)) {
-      tableRows += `<tr><td style="padding:6px 12px;border-bottom:1px solid #e8ddd0;color:#8a7060;font-size:12px;white-space:nowrap;font-family:Georgia,serif">${k.replace(/_/g,' ')}</td><td style="padding:6px 12px;border-bottom:1px solid #e8ddd0;font-size:13px;font-family:Georgia,serif">${v || '—'}</td></tr>`;
+      if (v && v !== 'No' && v.trim && v.trim() !== '') {
+        const label = k.replace(/_/g, ' ').toUpperCase();
+        lines += label + ': ' + v + '\n';
+      }
     }
-
-    const html = `<div style="font-family:Georgia,serif;max-width:700px;margin:0 auto"><div style="background:#3d2810;padding:20px;text-align:center"><h1 style="color:#fff;font-size:22px;letter-spacing:3px;margin:0">MAKTUBS</h1><p style="color:rgba(255,255,255,0.5);font-size:10px;margin:4px 0 0;letter-spacing:2px">FINANCIAL SERVICES</p></div><div style="background:#faf8f5;padding:24px"><h2 style="color:#3d2810;font-size:18px;margin:0 0 6px">${formName}</h2><p style="color:#8a7060;font-size:12px;margin:0 0 20px;font-style:italic">Submitted: ${new Date().toLocaleString()}</p><table style="width:100%;border-collapse:collapse;background:white;border:1px solid #d4c4b0">${tableRows}</table></div><div style="background:#3d2810;padding:14px;text-align:center"><p style="color:rgba(255,255,255,0.4);font-size:11px;margin:0">Maktubs Financial Services — San Salvador, El Salvador</p></div></div>`;
 
     try {
       await emailjs.send('service_bmjz3ye', 'template_c619jao', {
-        to_email: 'renesalome85@gmail.com',
         form_name: formName,
-        form_data: textData,
-        html_content: html,
-        reply_to: data.email || data.kyc_email || data.entity_email || '',
-        submitted_at: new Date().toLocaleString()
+        form_data: lines,
+        submitted_at: new Date().toLocaleString(),
+        reply_to: data.email || data.kyc_email || data.entity_email || ''
       });
       showToast('Form submitted successfully. We will contact you shortly.');
       form.reset();
