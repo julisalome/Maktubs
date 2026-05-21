@@ -2047,13 +2047,26 @@
     const data = {};
     const fd = new FormData(form);
     for (let [k, v] of fd.entries()) {
-      data[k] = data[k] ? data[k] + ', ' + v : v;
+      if (data[k]) {
+        data[k] = data[k] + ', ' + v;
+      } else {
+        data[k] = v;
+      }
     }
+    // Mark unchecked checkboxes as No, checked ones as Yes
     form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-      if (!data[cb.name]) data[cb.name] = 'No';
-      else if (data[cb.name] === 'on') data[cb.name] = 'Yes';
+      if (cb.checked) {
+        data[cb.name] = 'Yes';
+      } else if (!data[cb.name]) {
+        data[cb.name] = 'No';
+      }
     });
     return data;
+  }
+
+  // DEBUG helper - logs data to console
+  function debugData(data) {
+    console.log('Form data:', JSON.stringify(data, null, 2));
   }
 
   // FORMAT DATA
@@ -2078,10 +2091,8 @@
     // Build clean text lines for the email template
     let lines = '';
     for (let [k, v] of Object.entries(data)) {
-      if (v && v !== 'No' && v.trim && v.trim() !== '') {
-        const label = k.replace(/_/g, ' ').toUpperCase();
-        lines += label + ': ' + v + '\n';
-      }
+      const label = k.replace(/_/g, ' ').toUpperCase();
+      lines += label + ': ' + (v || '—') + '\n';
     }
 
     try {
